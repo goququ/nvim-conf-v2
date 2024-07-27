@@ -1,0 +1,16 @@
+{
+  "Export default": {
+    "prefix": "ed",
+    "body": [
+      "export {default} from '$1'"
+    ],
+    "description": "Export default"
+  },
+  "Export all": {
+    "prefix": "ea",
+    "body": [
+      "export * from '$1'"
+    ],
+    "description": "Export all"
+  }
+}

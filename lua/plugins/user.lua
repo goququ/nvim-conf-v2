@@ -1,5 +1,3 @@
-if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
-
 -- You can also add or configure plugins by creating files in this `plugins/` folder
 -- Here are some examples:
 
@@ -50,6 +48,10 @@ return {
       -- add more custom luasnip configuration such as filetype extend or custom snippets
       local luasnip = require "luasnip"
       luasnip.filetype_extend("javascript", { "javascriptreact" })
+      luasnip.filetype_extend("typescript", { "typescriptreact" })
+      require("luasnip.loaders.from_vscode").lazy_load {
+        paths = { vim.fn.expand "$XDG_CONFIG_HOME/nvim/snippets" },
+      } -- load snippets paths
     end,
   },
 
