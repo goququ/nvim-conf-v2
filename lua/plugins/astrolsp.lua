@@ -3,6 +3,15 @@
 -- NOTE: We highly recommend setting up the Lua Language Server (`:LspInstall lua_ls`)
 --       as this provides autocomplete and documentation while editing
 
+local function consoleLog()
+  local variable = vim.fn.expand "<cword>"
+  local file_type = vim.bo.filetype
+  if file_type == "typescript" or file_type == "typescriptreact" then
+    vim.cmd("normal! oconsole.log('LOG: " .. variable .. "', " .. variable .. ")")
+  end
+  if file_type == "go" then vim.cmd('normal! ofmt.Printf("\\n-----\\nLOG: %v\\n-----\\n", ' .. variable .. ")") end
+end
+
 ---@type LazySpec
 return {
   "AstroNvim/astrolsp",
@@ -107,6 +116,37 @@ return {
             return client.supports_method "textDocument/semanticTokens/full" and vim.lsp.semantic_tokens ~= nil
           end,
         },
+
+        ["<leader>xl"] = { consoleLog, desc = "Console log some variable" },
+        -- ["J"] = { "mzJ`z", desc = "" },
+        ["n"] = { "nzzzv", desc = "Next match centered" },
+        ["N"] = { "Nzzzv", desc = "Prev match centered" },
+        ["<C-c>"] = { "<cmd>close<cr>", desc = "Just close command" },
+        ["<C-`>"] = { "<cmd>ToggleTerm direction=horizontal size=14<cr>", desc = "Toggle terminal" },
+        ["<leader>xa"] = { "ggVG", desc = "Select entire file" },
+        ["<C-a>"] = { "ggVG", desc = "Select entire file" },
+      },
+      i = {
+        ["<C-s>"] = { "<Esc><cmd>w!<cr>", desc = "Force write" },
+        ["<C-c>"] = { "<cmd>close<cr>", desc = "Just close command" },
+      },
+      v = {
+        ["<C-a>"] = { "ggVG", desc = "Select entire file" },
+        ["<leader>xl"] = { consoleLog, desc = "Console log some variable" },
+        ["<C-s>"] = { "<Esc><cmd>w!<cr>", desc = "Force write" },
+        ["J"] = { ":m '>+1<CR>gv=gv", desc = "Move line bottom" },
+        ["K"] = { ":m '<-2<CR>gv=gv", desc = "Move line top" },
+        ["<C-d>"] = { "<C-d>zz", desc = "" },
+        ["<C-u>"] = { "<C-u>zz", desc = "" },
+        ["<C-c>"] = { "<cmd>close<cr>", desc = "Just close command" },
+      },
+      x = {
+        ["<C-s>"] = { "<Esc><cmd>w!<cr>", desc = "Force write" },
+        ["p"] = { [["_dP]], desc = "Enhance paste" },
+      },
+      t = {
+        ["<C-n>"] = { [[<C-\><C-n>]], desc = "Change terminal mode to normal" },
+        ["<C-`>"] = { "<cmd>ToggleTerm direction=horizontal size=14<cr>", desc = "Toggle terminal" },
       },
     },
     -- A custom `on_attach` function to be run after the default `on_attach` function
