@@ -1,5 +1,3 @@
-if true then return {} end -- WARN: REMOVE THIS LINE TO ACTIVATE THIS FILE
-
 -- AstroLSP allows you to customize the features in AstroNvim's LSP configuration engine
 -- Configuration documentation can be found with `:h astrolsp`
 -- NOTE: We highly recommend setting up the Lua Language Server (`:LspInstall lua_ls`)
@@ -14,6 +12,7 @@ return {
     features = {
       codelens = true, -- enable/disable codelens refresh on start
       inlay_hints = false, -- enable/disable inlay hints on start
+
       semantic_tokens = true, -- enable/disable semantic token highlighting
     },
     -- customize lsp formatting options
@@ -32,7 +31,7 @@ return {
         -- disable lua_ls formatting capability if you want to use StyLua to format your lua code
         -- "lua_ls",
       },
-      timeout_ms = 1000, -- default format timeout
+      timeout_ms = 10000, -- default format timeout
       -- filter = function(client) -- fully override the default formatting function
       --   return true
       -- end
@@ -40,11 +39,26 @@ return {
     -- enable servers that you already have installed without mason
     servers = {
       -- "pyright"
+      "graphql",
+      "astro",
     },
     -- customize language server configuration options passed to `lspconfig`
     ---@diagnostic disable: missing-fields
     config = {
       -- clangd = { capabilities = { offsetEncoding = "utf-8" } },
+      graphql = {
+        cmd = { "graphql-lsp", "server", "-m", "stream" },
+        filetypes = { "graphql", "typescriptreact", "typescript", "javascript", "javascriptreact" },
+        root_dir = require("lspconfig").util.root_pattern(".graphqlrc*", ".graphql.config.*", "graphql.config.*"),
+      },
+      astro = {
+        filetypes = { "astro" },
+        cmd = { "astro-ls", "--stdio" },
+        init_options = {
+          typescript = {},
+        },
+        root_dir = require("lspconfig").util.root_pattern("package.json", "tsconfig.json", "jsconfig.json", ".git"),
+      },
     },
     -- customize how language servers are attached
     handlers = {
