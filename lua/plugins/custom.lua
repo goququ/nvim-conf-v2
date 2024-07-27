@@ -29,6 +29,7 @@ return {
       vim.keymap.set("i", "<c-,>", function() return vim.fn["codeium#CycleCompletions"](-1) end, { expr = true })
     end,
   },
+  { "catppuccin/nvim", name = "catppuccin", priority = 1000 },
   -- {
   -- 	"mattn/emmet-vim",
   -- 	fevent = "VeryLazy",
