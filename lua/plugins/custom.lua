@@ -34,4 +34,8 @@ return {
   -- 	"mattn/emmet-vim",
   -- 	fevent = "VeryLazy",
   -- },
+  {
+    "mfussenegger/nvim-dap",
+    enabled = false,
+  },
 }
