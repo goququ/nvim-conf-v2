@@ -6,7 +6,7 @@
 local function consoleLog()
   local variable = vim.fn.expand "<cword>"
   local file_type = vim.bo.filetype
-  if file_type == "typescript" or file_type == "typescriptreact" then
+  if file_type == "typescript" or file_type == "typescriptreact" or file_type == "svelte" then
     vim.cmd("normal! oconsole.log('LOG: " .. variable .. "', " .. variable .. ")")
   end
   if file_type == "go" then vim.cmd('normal! ofmt.Printf("\\n-----\\nLOG: %v\\n-----\\n", ' .. variable .. ")") end
@@ -50,6 +50,7 @@ return {
       -- "pyright"
       "graphql",
       "astro",
+      "svelte",
     },
     -- customize language server configuration options passed to `lspconfig`
     ---@diagnostic disable: missing-fields
@@ -64,9 +65,28 @@ return {
         filetypes = { "astro" },
         cmd = { "astro-ls", "--stdio" },
         init_options = {
-          typescript = {},
+          -- typescript = {},
         },
         root_dir = require("lspconfig").util.root_pattern("package.json", "tsconfig.json", "jsconfig.json", ".git"),
+      },
+      svelte = {
+        setup = {
+          cmd = { "svelte-language-server", "--stdio" },
+          settings = {
+            svelte = {
+              plugin = {
+                typescript = {
+                  enabled = true,
+                },
+              },
+            },
+          },
+        },
+        plugin = {
+          typescript = {
+            enabled = true,
+          },
+        },
       },
     },
     -- customize how language servers are attached

@@ -9,6 +9,8 @@ return {
       "vim",
       "graphql",
       "astro",
+      "scss",
+      "svelte",
       -- add more arguments for adding more treesitter parsers
     },
   },
